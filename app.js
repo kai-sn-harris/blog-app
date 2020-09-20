@@ -83,7 +83,7 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.post("/newpost", (req, res) => {
+app.post("/newpost", async (req, res) => {
     // check if there is a web session
     if(!(req.session && req.session.userId)) res.redirect("/blog", {error: "Could create a new post at this time"});
     else {
@@ -92,7 +92,7 @@ app.post("/newpost", (req, res) => {
             if(err) console.log(err);
         });
         // find user and add it's new post
-        User.findById(req.session.userId, async (err, user) => {
+        await User.findById(req.session.userId, async (err, user) => {
             if(err) {
                 console.log(err);
                 // if an error occured, delete the post as it will not be linked to the user
