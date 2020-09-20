@@ -23,7 +23,11 @@ app.use(sessions({
 
 app.set("view engine", "ejs");
 
-mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+});
 
 // routes
 require("./routes")(app, User, Post, bcrypt);
