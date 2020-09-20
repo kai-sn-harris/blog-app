@@ -63,7 +63,7 @@ app.post("/register", (req, res) => {
 app.post("/login", (req, res) => {
     User.findOne({email: req.body.user.email}, (err, user) => {
         // if an error occured, or if the user is not found (falsey), or iff the password does not match
-        if(err || !user || !bcrypt.compare(req.body.user.password, user.pasword)) {
+        if(err || !user || !bcrypt.compare(req.body.user.password, user.password)) {
             res.render("login", {error: "Incorrect username or password"});
         } else {
             // i think this sends a cookie to the browser
