@@ -14,4 +14,12 @@ app.get("/", (req, res) => {
     res.render("index", {title: "Home"});
 });
 
+app.get("/register", (req, res) => {
+    res.render("register", {title: "Register"});
+});
+
+app.get("/login", (req, res) => {
+    res.render("login", {title: "Login"});
+});
+
 app.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));
