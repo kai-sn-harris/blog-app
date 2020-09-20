@@ -53,6 +53,7 @@ app.post("/register", (req, res) => {
     let hash = bcrypt.hashSync(req.body.user.password, 14);
     req.body.user.password = hash;
     let user = new User(req.body.user);
+    user.posts = [];
     user.save((err) => {
         if(err) {
             res.render("register", {error: err});
