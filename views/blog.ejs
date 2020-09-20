@@ -2,4 +2,15 @@
     <%- include("./partials/nav", {active: "blog"}) %>
     <h1>Welcome <%= user.username %></h1>
 
+    <div class="posts">
+        <% user.posts.forEach(post => { %>
+            <div class="card">
+                <div class="card-body">
+                    <h3><%= post.title %></h3>
+                    <p><%= post.body %></p>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
 <%- include("./partials/footer") %>
