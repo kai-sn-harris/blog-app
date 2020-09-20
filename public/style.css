@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.hero-h1 {
+    text-align: center;
+}
+
+.cards-container {
+    display: flex;
+    justify-content: space-around;
+}
