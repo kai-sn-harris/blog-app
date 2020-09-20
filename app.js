@@ -18,37 +18,28 @@ mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopo
 // GET REQUESTS
 
 app.get("/", (req, res) => {
-    res.render("index", {title: "Home"});
+    res.render("index");
 });
 
 app.get("/register", (req, res) => {
-    res.render("register", {title: "Register"});
+    res.render("register");
 });
 
 app.get("/login", (req, res) => {
-    res.render("login", {title: "Login"});
+    res.render("login");
 });
 
 // POST REQUESTS
-app.post("/register", async (req, res) => {
+app.post("/register", (req, res) => {
     let hash = bcrypt.hashSync(req.body.user.password, 14);
     req.body.user.password = hash;
     let user = new User(req.body.user);
-    await user.save((err) => {
+    user.save((err) => {
         if(err) {
             console.log("something went wrong:\n" + err);
-            res.redirect("/");
-        }
-        else res.redirect("/login");
+            res.render("register", {error: err});
+        } else res.redirect("login");
     });
-    // check if email is already in use
-    // User.find({email: req.body.user.email}, (err, users) => {
-    //     if(err) {
-    //         console.log(err);
-    //         return res.redirect("/");
-    //     }
-    //     console.log(users);
-    // });
 });
 
 app.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));

@@ -1,5 +1,10 @@
-<%- include("./partials/header") %>
+<%- include("./partials/header", {title: "Register"}) %>
     <%- include("./partials/nav", {active: "register"}) %>
+    <% if(typeof error !== "undefined") { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
     <div class="container register-login-container">
         <form action="/register" method="POST">
             <div class="form-group">
