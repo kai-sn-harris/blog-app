@@ -52,9 +52,22 @@ app.get("/blog", (req, res) => {
             if(err) next(err);
             if(!user) res.redirect("/login");
             
-            else res.render("blog", {user: user});
+            else res.render("myblog", {user: user});
         });
     }
+});
+
+// view another user's blog
+app.get("/blog/:username", (req, res) => {
+    // we dont need to be in a session to view this
+    User.findOne({username: req.params.username}).populate("posts").exec((err, user) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/");
+        } else {
+            res.render("blog", {user: user})
+        }
+    });
 });
 
 // POST REQUESTS

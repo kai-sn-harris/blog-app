@@ -1,7 +1,6 @@
-<% let username = user.username; %>
-<%- include("./partials/header", {title: username + "'s blog"}) %>
-    <%- include("./partials/nav", {active: ""}) %>
-    <h1><%= user.username %>'s Blog</h1>
+<%- include("./partials/header", {title: "Blog"}) %>
+    <%- include("./partials/nav", {active: "blog"}) %>
+    <h1>Welcome <%= user.username %></h1>
 
     <% if(typeof error !== "undefined") { %>
         <div class="alert alert-danger" role="alert">
