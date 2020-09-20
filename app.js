@@ -47,10 +47,11 @@ app.get("/blog", (req, res) => {
     if(!(req.session && req.session.userId)) res.redirect("/login");
     else {
         // find user
-        User.findById(req.session.userId, (err, user) => {
+        User.findById(req.session.userId).populate("posts").exec((err, user) => {
             // not sure what the next() function does but it works so yea
             if(err) next(err);
             if(!user) res.redirect("/login");
+            
             else res.render("blog", {user: user});
         });
     }
@@ -80,6 +81,29 @@ app.post("/login", (req, res) => {
             res.redirect("/blog");
         }
     });
+});
+
+app.post("/newpost", (req, res) => {
+    // check if there is a web session
+    if(!(req.session && req.session.userId)) res.redirect("/blog", {error: "Could create a new post at this time"});
+    else {
+        let post = new Post(req.body.post);
+        post.save(err => {
+            if(err) console.log(err);
+        });
+        // find user and add it's new post
+        User.findById(req.session.userId, async (err, user) => {
+            if(err) {
+                console.log(err);
+                // if an error occured, delete the post as it will not be linked to the user
+                await Post.findByIdAndDelete(post._id);
+            } else {
+                user.posts.push(post);
+                user.save();
+            }
+        });
+        res.redirect("/blog");
+    }
 });
 
 app.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));

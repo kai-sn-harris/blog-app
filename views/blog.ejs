@@ -2,12 +2,19 @@
     <%- include("./partials/nav", {active: "blog"}) %>
     <h1>Welcome <%= user.username %></h1>
 
+    <% if(typeof error !== "undefined") { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
     <div class="posts">
         <% user.posts.forEach(post => { %>
             <div class="card">
                 <div class="card-body">
                     <h3><%= post.title %></h3>
                     <p><%= post.body %></p>
+                    <p class="text-muted"><%= post.date %></p>
                 </div>
             </div>
         <% }); %>
