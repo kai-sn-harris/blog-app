@@ -11,7 +11,11 @@
     width: 50%;
 }
 
-/* bootstrap overrides */
-.btn-success {
-    width: 25%;
+.post-form {
+    justify-content: center;
 }
+
+/* bootstrap overrides */
+/* .btn-success {
+    width: 25%;
+} */

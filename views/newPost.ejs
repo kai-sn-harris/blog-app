@@ -1,0 +1,20 @@
+<%- include("./partials/header", {title: "New Post"}) %>
+    <%- include("./partials/nav", {active: "newpost"}) %>
+    <h1 class="display-3" style="text-align: center;">New Post</h1>
+    <div class="row post-form" style="margin: auto">
+        <div class="col-sm-6">
+            <form action="/newpost" method="POST">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input class="form-control" id="title" type="text" value="Title" name="post[title]" required>
+        
+                    <label for="Body">Body:</label>
+                    <input class="form-control" id="body" type="text" value="Body" name="post[Body]">
+        
+                    <button class="btn btn-success btn-lg mt-4">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<%- include("./partials/footer") %>
