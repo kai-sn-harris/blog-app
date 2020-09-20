@@ -2,7 +2,8 @@ const express = require("express"),
 app = express(),
 mongoose = require("mongoose"),
 sessions = require("client-sessions"),
-bcrypt = require("bcryptjs");
+bcrypt = require("bcryptjs"),
+methodOverride = require("method-override");
 
 if(process.env.NODE_ENV !== "production") require("dotenv").config();
 const PORT = process.env.PORT;
@@ -13,6 +14,7 @@ Comment = require("./models/Comment");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 app.use(sessions({
     cookieName: "session",
     secret: process.env.SECRET,
@@ -117,6 +119,18 @@ app.post("/newpost", async (req, res) => {
         });
         res.redirect("/blog");
     }
+});
+
+// DELETE requests
+app.delete("/deletepost/:id", (req, res) => {
+    // find post
+    // dont need to populate comments as we only care about the post
+    Post.findByIdAndDelete(req.params.id, (err, post) => {
+        if(err) {
+            console.log(err);
+            res.redirect("/");
+        } else res.redirect("/blog");
+    });
 });
 
 app.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));

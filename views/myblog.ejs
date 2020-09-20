@@ -11,11 +11,14 @@
     <div class="posts">
         <% user.posts.forEach(post => { %>
             <div class="card">
-                <div class="card-body">
+                <div class="card-body col-sm-6">
                     <h3><%= post.title %></h3>
                     <p><%= post.body %></p>
                     <p class="text-muted"><%= post.date %></p>
                 </div>
+                <form action="/deletepost/<%= post._id %>?_method=DELETE" method="POST">
+                    <button href="" class="btn btn-danger btn-md col-sm-2">Delete</button>
+                </form>
             </div>
         <% }); %>
     </div>
