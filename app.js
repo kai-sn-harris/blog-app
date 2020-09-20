@@ -7,7 +7,9 @@ bcrypt = require("bcryptjs");
 if(process.env.NODE_ENV !== "production") require("dotenv").config();
 const PORT = process.env.PORT;
 
-const User = require("./models/User");
+const User = require("./models/User"),
+Post = require("./models/Post"),
+Comment = require("./models/Comment");
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({extended: true}));
@@ -33,6 +35,12 @@ app.get("/register", (req, res) => {
 
 app.get("/login", (req, res) => {
     res.render("login");
+});
+
+app.get("/newpost", (req, res) => {
+    // make sure user is logged in
+    if(!(req.session && req.session.userId)) res.redirect("login");
+    else res.render("newPost");
 });
 
 app.get("/blog", (req, res) => {
