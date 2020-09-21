@@ -78,7 +78,7 @@ module.exports = (app, User, Post, bcrypt) => {
         if(!(req.session && req.session.userId)) res.redirect("/blog", {error: "Could create a new post at this time"});
         else {
             let post = new Post(req.body.post);
-            post.save(err => {
+            await post.save(err => {
                 if(err) console.log(err);
             });
             // find user and add it's new post
@@ -89,7 +89,7 @@ module.exports = (app, User, Post, bcrypt) => {
                     await Post.findByIdAndDelete(post._id);
                 } else {
                     user.posts.push(post);
-                    user.save();
+                    await user.save();
                 }
             });
             res.redirect("/blog");
