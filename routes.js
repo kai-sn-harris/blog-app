@@ -46,6 +46,17 @@ module.exports = (app, User, Post, bcrypt) => {
         });
     });
 
+    app.post("/search", (req, res) => {
+        let search = req.body.search;
+        // find the username inside db
+        User.findOne({username: search}, (err, user) => {
+            if(err) {
+                console.log(err);
+                res.redirect("/");
+            } else res.render("users", {search: search, user: user});
+        });
+    });
+
     // POST REQUESTS
     app.post("/register", (req, res) => {
         let hash = bcrypt.hashSync(req.body.user.password, 14);
@@ -53,6 +64,8 @@ module.exports = (app, User, Post, bcrypt) => {
         let user = new User(req.body.user);
         user.posts = [];
         user.email = user.email.toLowerCase();
+        user.bio = "";
+        user.imgSrc = "";
         user.save((err) => {
             if(err) {
                 res.render("register", {error: err});

@@ -1,0 +1,27 @@
+<%- include("./partials/header", {title: "Users"}) %>
+
+    <%- include("./partials/nav", {active: ""}) %>
+    <% if(user != null) { %>
+        <h1 class="display-4">Search: <%= search %></h1>
+        <div class="card" style="width: 18rem;">
+            <% if(user.imgSrc !== "") { %>
+                <img src="<%= user.imgSrc %>" class="card-img-top" alt="User's profile picture">
+            <% } else { %>
+                <img src="/imgs/default.png" class="card-img-top" alt="Default img (user has not set a custom profile picture)">
+            <% } %>
+            <div class="card-body">
+                <h5 class="card-title"><%= user.username %></h5>
+                <% if(user.bio !== "") { %>
+                    <p class="card-text"><%= user.bio %></p>
+                <% } else { %>
+                    <p class="card-text"><%= user.username %> has no bio</p>
+                <% } %>
+                <a href="/blog/<%= user.username %>" class="btn btn-primary"><%= user.username %>'s blog</a>
+            </div>
+        </div>
+    <% } else { %>
+        <h1 class="display-4">Your search: <%= search %> did not yield any results</h1>
+    <% } %>
+
+
+<%- include("./partials/footer") %>
