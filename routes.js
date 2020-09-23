@@ -95,7 +95,7 @@ module.exports = (app, User, Post, bcrypt) => {
                 if(err) console.log(err);
             });
             // find user and add it's new post
-            await User.findById(req.session.userId, async (err, user) => {
+            User.findById(req.session.userId, async (err, user) => {
                 if(err) {
                     console.log(err);
                     // if an error occured, delete the post as it will not be linked to the user
@@ -103,9 +103,9 @@ module.exports = (app, User, Post, bcrypt) => {
                 } else {
                     user.posts.push(post);
                     await user.save();
+                    res.redirect("/blog");
                 }
             });
-            res.redirect("/blog");
         }
     });
 
