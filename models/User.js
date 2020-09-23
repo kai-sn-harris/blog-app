@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     posts: [{type: mongoose.Schema.Types.ObjectId, ref: "post"}],
     imgSrc: {type: String},
-    bio: {type: String}
+    bio: {type: String},
+    private: Boolean
 });
 
 userSchema.plugin(uniqueValidator);

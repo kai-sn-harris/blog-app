@@ -66,6 +66,7 @@ module.exports = (app, User, Post, bcrypt) => {
         user.email = user.email.toLowerCase();
         user.bio = "";
         user.imgSrc = "";
+        user.private = false;
         user.save((err) => {
             if(err) {
                 res.render("register", {error: err});
