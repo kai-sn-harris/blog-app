@@ -13,7 +13,6 @@ editBtn.addEventListener("click", event => {
         document.querySelector("input#username").value = username;
         document.querySelector("textarea#bio").value = bio;
         document.querySelector("input#private").checked = private;
-        console.log(bio)
     }
     !displayMode ? editBtn.textContent = "Back" : editBtn.textContent = "Edit";
 });
