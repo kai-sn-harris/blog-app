@@ -7,5 +7,5 @@ The user authentication used in this blog app is by no means secure. Attackers c
 In this blog app, you have your very own blog. You can create posts, and share them with your friends. Other users can search for your username and view your blog as well. 
 
 ## Future features
- - private setting on account
+ - ~~private setting on account~~
  - adding images to posts
