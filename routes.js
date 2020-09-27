@@ -70,7 +70,10 @@ module.exports = (app) => {
             if(err) {
                 console.log(err);
                 res.redirect("/");
-            } else res.render("users", {search: search, user: user, private: user.private});
+            } else {
+                if(!user) res.render("users", {search: search});
+                else res.render("users", {search: search, user: user});
+            }
         });
     });
 
