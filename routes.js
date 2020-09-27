@@ -46,6 +46,15 @@ module.exports = (app, User, Post, bcrypt) => {
         });
     });
 
+    app.get("/profile", (req, res) => {
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            User.findById(req.session.userId, (err, user) => {
+                res.render("profile", {user: user});
+            });
+        }
+    });
+
     app.post("/search", (req, res) => {
         let search = req.body.search;
         // find the username inside db
@@ -53,7 +62,7 @@ module.exports = (app, User, Post, bcrypt) => {
             if(err) {
                 console.log(err);
                 res.redirect("/");
-            } else res.render("users", {search: search, user: user});
+            } else res.render("users", {search: search, user: user, private: user.private});
         });
     });
 
