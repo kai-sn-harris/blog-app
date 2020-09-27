@@ -1,4 +1,8 @@
-module.exports = (app, User, Post, bcrypt) => {
+const User = require("./models/User"),
+Post = require("./models/Post"),
+bcrypt = require("bcryptjs");
+
+module.exports = (app) => {
     // GET REQUESTS
 
     app.get("/", (req, res) => {
@@ -50,7 +54,11 @@ module.exports = (app, User, Post, bcrypt) => {
         if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
             User.findById(req.session.userId, (err, user) => {
-                res.render("profile", {user: user});
+                res.render("profile", {
+                    user: user,
+                    error: req.flash("error"),
+                    tab: req.flash("tab")
+                });
             });
         }
     });
@@ -115,6 +123,23 @@ module.exports = (app, User, Post, bcrypt) => {
                     await user.save();
                     res.redirect("/blog");
                 }
+            });
+        }
+    });
+
+    app.post("/updateprofile", async (req, res) => {
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            let user = req.body.user;
+            user.private === "on" ? user.private = true : user.private = false;
+            await User.findOneAndUpdate({email: user.email}, user, async (err) => {
+                if(err) {
+                    if(err.code === 11000) {
+                        req.flash("error", "Username already in use");
+                        req.flash("tab", "edit");
+                        res.redirect("/profile");
+                    }
+                } else res.redirect("/profile");
             });
         }
     });

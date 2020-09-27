@@ -4,7 +4,7 @@ edit          = document.querySelector(".edit");
 
 let displayMode = true;
 
-editBtn.addEventListener("click", event => {
+const changeTab = () => {
     display.classList.toggle("hidden");
     edit.classList.toggle("hidden");
     displayMode = !displayMode;
@@ -15,5 +15,7 @@ editBtn.addEventListener("click", event => {
         document.querySelector("input#private").checked = private;
     }
     !displayMode ? editBtn.textContent = "Back" : editBtn.textContent = "Edit";
-});
+}
 
+editBtn.addEventListener("click", changeTab);
+if(tab === "edit") changeTab();
