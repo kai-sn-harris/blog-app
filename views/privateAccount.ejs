@@ -1,0 +1,15 @@
+<%- include("./partials/header", {title: "Private User"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <div class="pnf-login-container">
+        <% if(typeof friend !== "undefined") { %> <% if(!friend) { %> <h1 class="display-4" style="text-align: center;">You are not on <%= name %>'s friend list</h1> <% } %> <% } %>
+        <% if(typeof friend === "undefined") { %> <h1 class="display-4" style="text-align: center;">The account <%= name %> is private</h1> <% } %>
+        <p>If you are on their friend list, login to view this page</p>
+        <p>If you are not on their friend list, consider sending a friend request</p>
+        <div class="btns">
+            <a href="/login" class="btn btn-lg btn-success">Login?</a>
+            <a href="/" class="btn btn-lg btn-primary">Home</a>
+        </div>
+    </div>
+
+<%- include("./partials/footer") %>
