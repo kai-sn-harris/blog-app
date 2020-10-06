@@ -38,14 +38,40 @@ module.exports = (app) => {
     });
 
     // view another user's blog
-    app.get("/blog/:username", (req, res) => {
-        // we dont need to be in a session to view this
-        User.findOne({username: req.params.username}).populate("posts").exec((err, user) => {
+    app.get("/blog/:username", async (req, res) => {
+        let username = req.params.username;
+
+        const viewBlog = () => {
+            User.findOne({username: username}).populate("posts").exec((err, user) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/");
+                } else res.render("blog", {user: user});
+            });
+        }
+
+        // check if blog is private
+        User.findOne({username: username}).populate("friends").exec((err, user) => {
             if(err) {
                 console.log(err);
                 res.redirect("/");
             } else {
-                res.render("blog", {user: user})
+                if(!user) res.render("/");
+                else {
+                    // if the user is not private view the blog or you are logged in
+                    if(!user.private) viewBlog();
+                    else {
+                        // check if the user is not logged in, if they aren't, they cannot view a private blog
+                        if(!(req.session && req.session.userId)) res.render("privateAccount", {name: username});
+                        else {
+                            // get blog owner's friends, check if logged in user is in that list
+                            user.friends.forEach(friendID => {
+                                if(friendID === req.session.userId) return viewBlog();
+                            });
+                            res.render("privateAccount", {name: username, friend: false});
+                        }
+                    }
+                }
             }
         });
     });
