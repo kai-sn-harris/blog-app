@@ -7,10 +7,13 @@
     </header>
 
     <div class="row-fluid">
-        <div class="display col-sm-6">
-            <p>Username: <%= user.username %></p>
-            <p>Email: <%= user.email %></p>
-            <p style="width: 33.33%;">Bio:<br><%= user.bio %></p>
+        <div class="card display col-sm-4">
+            <div class="card-body">
+                <img id="user-img" src="<%= user.imgSrc %>" alt="User image">
+                <p>Username: <%= user.username %></p>
+                <p>Email: <%= user.email %></p>
+                <p>Bio:<br><%= user.bio %></p>
+            </div>
         </div>
     
         <div class="edit hidden col-sm-6">
@@ -42,10 +45,10 @@
     </div>
 
     <script>
-    let private = JSON.parse("<%= user.private === true ? true : false %>");
+    let private = JSON.parse("<%= user.private %>");
     let bio = "<%= user.bio %>";
     let username = "<%= user.username %>";
-    let tab = "<%= tab %>"
+    let tab = "<%= tab %>";
     </script>
     <script src="/profile.js"></script>
 <%- include("./partials/footer") %>
