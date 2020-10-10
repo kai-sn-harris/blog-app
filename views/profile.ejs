@@ -17,7 +17,7 @@
         </div>
     
         <div class="edit hidden col-sm-6">
-            <form action="/updateprofile" method="POST">
+            <form action="/updateprofile/<%= user._id %>" method="POST">
                 <% if(error.length !== 0) { %>
                     <div class="alert alert-danger">
                         <%= error %>
@@ -38,7 +38,6 @@
                     <label for="private">Private:</label>
                     <input type="checkbox" name="user[private]" id="private">
                 </div>
-                <input type="hidden" name="user[email]" value="<%= user.email %>">
                 <button class="btn btn-success">Update</button>
             </form>
         </div>
