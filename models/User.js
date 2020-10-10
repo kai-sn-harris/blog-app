@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
     imgSrc: {type: String},
     bio: {type: String},
     private: Boolean,
-    friends: [{type: mongoose.Schema.Types.ObjectId, ref: "user"}]
+    friends: [{type: mongoose.Schema.Types.ObjectId, ref: "user"}],
+    friendRequests: [{type: mongoose.Schema.Types.ObjectId, ref: "user"}]
 });
 
 userSchema.plugin(uniqueValidator);
