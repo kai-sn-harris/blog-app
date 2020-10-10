@@ -97,8 +97,25 @@ module.exports = (app) => {
                 console.log(err);
                 res.redirect("/");
             } else {
-                if(!user) res.render("users", {search: search});
-                else res.render("users", {search: search, user: user});
+                // if there are no users, we dont care if the user is logged in or not so false is fine
+                if(!user) res.render("users", {search: search, loggedIn: false});
+                else {
+                    // check if user is logged in AND matches the searched user
+                    if(!(req.session && req.session.userId)) res.render("users", {search: search, user: user, loggedIn: false});
+                    else {
+                        loggedIn = false;
+                        // check if user is viewing themselves
+                        User.findById(req.session.userId, (err, foundUser) => {
+                            if(err) {
+                                console.log(err);
+                                res.redirect("/");
+                            } else {
+                                if(user.username === foundUser.username) loggedIn = true;
+                                res.render("users", {search: search, user: user, loggedIn: loggedIn});
+                            }
+                        });
+                    }
+                }
             }
         });
     });
@@ -156,12 +173,12 @@ module.exports = (app) => {
         }
     });
 
-    app.post("/updateprofile", async (req, res) => {
+    app.post("/updateprofile/:id", async (req, res) => {
         if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
             let user = req.body.user;
             user.private === "on" ? user.private = true : user.private = false;
-            await User.findOneAndUpdate({email: user.email}, user, async (err) => {
+            await User.findByIdAndUpdate(req.params.id, user, (err) => {
                 if(err) {
                     if(err.code === 11000) {
                         req.flash("error", "Username already in use");
