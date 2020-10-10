@@ -2,10 +2,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+} #profile-header h1 {
+    position: relative;
+    width: 40%;
+    left: calc(50% - 20%);
+    text-align: center;
 }
 
 #bio {
     display: block;
+}
+
+#user-img {
+    width: 100%;
 }
 
 .hero-h1 {
@@ -27,6 +36,17 @@
 
 .edit-btn {
     margin-right: 1rem;
+}
+
+.display, .edit {
+    margin: 0 auto;
+}
+
+.pnf-login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* js toggles */
