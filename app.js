@@ -1,9 +1,9 @@
-const express = require("express"),
-app = express(),
-mongoose = require("mongoose"),
-sessions = require("client-sessions"),
+const express  = require("express"),
+app            = express(),
+mongoose       = require("mongoose"),
+sessions       = require("client-sessions"),
 methodOverride = require("method-override"),
-flash = require("connect-flash");
+flash          = require("connect-flash");
 
 if(process.env.NODE_ENV !== "production") require("dotenv").config();
 const PORT = process.env.PORT;
