@@ -1,6 +1,7 @@
 const User = require("./models/User"),
 Post = require("./models/Post"),
-bcrypt = require("bcryptjs");
+bcrypt = require("bcryptjs"),
+mongoose = require("mongoose");
 
 module.exports = (app) => {
     // GET REQUESTS
@@ -186,6 +187,20 @@ module.exports = (app) => {
                         res.redirect("/profile");
                     }
                 } else res.redirect("/profile");
+            });
+        }
+    });
+
+    app.post("/friendreq/:username", (req, res) => {
+        // check if the user is logged in
+        if(!(req.session && req.session.userId)) res.redirect("/");
+        else {
+            // Find the user and add the logged in user's id to their friend requests
+            User.findOne({username: req.params.username}, async (err, user) => {
+                let objectID = mongoose.Types.ObjectId(req.session.userId);
+                user.friendRequests.push(objectID);
+                await user.save();
+                res.redirect("/blog");
             });
         }
     });
