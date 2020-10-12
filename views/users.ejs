@@ -27,8 +27,10 @@
                     
                 <% } %>
                 <% if(!loggedIn) { %>
-                    <a href="/friendreq/<%= user.username %>" class="btn btn-primary mt-3">Send friend request</a>
-                <% } %>
+                    <form method="POST" action="/friendreq/<%= user.username %>">
+                        <button class="btn btn-primary mt-3">Send friend request</button>
+                    </form>
+                    <% } %>
             </div>
         </div>
     <% } else { %>
