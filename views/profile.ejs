@@ -2,8 +2,13 @@
     <%- include("./partials/nav", {active: "profile"}) %>
 
     <header id="profile-header">
-        <h1 class="display-3 profile-h1">Your Profile</h1>
-        <button class="btn btn-primary btn-lg edit-btn">Edit</button>
+        <h1 class="display-3">Your Profile</h1>
+        <div id="profile-btns">
+            <% if(friendRequests.length !== 0) { %>
+                <a class="btn btn-success btn-lg" href="/friendrequests">Friend Requests</a>
+            <% } %>
+            <button class="btn btn-primary btn-lg edit-btn">Edit</button>
+        </div>
     </header>
 
     <div class="row-fluid">
