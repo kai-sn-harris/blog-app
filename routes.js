@@ -80,11 +80,17 @@ module.exports = (app) => {
     app.get("/profile", (req, res) => {
         if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
-            User.findById(req.session.userId, (err, user) => {
+            // Find logged in user's profile
+            User.findById(req.session.userId).populate("friendRequests").exec((err, user) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/");
+                }
                 res.render("profile", {
                     user: user,
                     error: req.flash("error"),
-                    tab: req.flash("tab")
+                    tab: req.flash("tab"),
+                    friendRequests: user.friendRequests
                 });
             });
         }
