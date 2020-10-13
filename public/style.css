@@ -17,6 +17,21 @@
     width: 100%;
 }
 
+.friendReq div header {
+    display: flex;
+}
+
+.friendReq {
+    padding: 1rem 0.5rem;
+}
+
+.round-pfp {
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: inline-block;
+}
+
 .hero-h1 {
     text-align: center;
 }
