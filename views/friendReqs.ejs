@@ -1,0 +1,24 @@
+<%- include("./partials/header", {title: "Friend Requests"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <div class="d-flex container-fluid">
+        <% reqs.forEach(req => { %>
+            <div class="friendReq card col-md-3 col-sm-6 mt-2">
+                <div class="card-body">
+                    <header>
+                        <img class="round-pfp" src="<%= req.imgSrc %>" alt="userPfp">
+                        <h1 class="ml-2"><%= req.username %></h1>
+                    </header>
+                    <div class="bio">
+                        <p><%= req.bio %></p>
+                    </div>
+                    <a class="btn btn-lg btn-primary" href="/blog/<%= req.username %>"><%= req.username %>'<% if(req.username[req.username.length - 1].toLowerCase() !== "s") { %>s<% } %> blog</a>
+                    <form action="/acceptreq/<%= req.username %>" method="POST" class="mt-2">
+                        <button class="btn btn-success btn-lg">Accept</button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+<%- include("./partials/footer") %>
