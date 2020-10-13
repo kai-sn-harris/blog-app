@@ -52,24 +52,25 @@ module.exports = (app) => {
         }
 
         // check if blog is private
-        User.findOne({username: username}).populate("friends").exec((err, user) => {
+        User.findOne({username: username}, (err, user) => {
             if(err) {
                 console.log(err);
                 res.redirect("/");
             } else {
-                if(!user) res.render("/");
+                if(!user) res.redirect("/");
                 else {
-                    // if the user is not private view the blog or you are logged in
+                    // if the user is not private view the blog it doesn't matter if you're logged in or not
                     if(!user.private) viewBlog();
                     else {
                         // check if the user is not logged in, if they aren't, they cannot view a private blog
                         if(!(req.session && req.session.userId)) res.render("privateAccount", {name: username});
                         else {
+                            let canView = false;
                             // get blog owner's friends, check if logged in user is in that list
                             user.friends.forEach(friendID => {
-                                if(friendID === req.session.userId) return viewBlog();
+                                if(friendID == req.session.userId) canView = true;
                             });
-                            res.render("privateAccount", {name: username, friend: false});
+                            canView ? viewBlog() : res.render("privateAccount", {name: username, friend: false});
                         }
                     }
                 }
@@ -231,18 +232,26 @@ module.exports = (app) => {
             User.findById(req.session.userId)
             .populate("friends")
             .populate("friendRequests")
-            .exec(async (err, user) => {
+            .exec((err, user) => {
                 if(err) {
                     console.log(err);
                     res.redirect("/profile");
                 } else {
-                    // remove new friend from requests and add them to friends
-                    user.friends.push(user);
-                    // create new array from the old friend requests without the new friend
-                    let newReqs = user.friendRequests.filter(friendReq => {friendReq !== user});
-                    user.friendRequests = newReqs;
-                    await user.save();
-                    res.redirect("/profile");
+                    // Find accepted user
+                    User.findOne({username: req.params.acceptedUser}, async (err, acceptedUser) => {
+                        if(err) {
+                            console.log(err);
+                            res.redirect("/");
+                        } else {
+                            // remove new friend from requests and add them to friends
+                            user.friends.push(acceptedUser);
+                            // create new array from the old friend requests without the new friend
+                            let newReqs = user.friendRequests.filter(friendReq => {friendReq !== acceptedUser});
+                            user.friendRequests = newReqs;
+                            await user.save();
+                            res.redirect("/profile");
+                        }
+                    });
                 }
             });
         }        
