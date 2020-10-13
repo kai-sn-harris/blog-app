@@ -10,15 +10,15 @@
     <% } %>
 
     <div class="posts">
-        <% user.posts.forEach(post => { %>
+        <% for(let i = user.posts.length-1; i >= 0; i--) { %> 
             <div class="card">
                 <div class="card-body">
-                    <h3><%= post.title %></h3>
-                    <p><%= post.body %></p>
-                    <p class="text-muted"><%= post.date %></p>
+                    <h3><%= user.posts[i].title %></h3>
+                    <p><%= user.posts[i].body %></p>
+                    <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
             </div>
-        <% }); %>
+        <% } %>
     </div>
 
 <%- include("./partials/footer") %>
