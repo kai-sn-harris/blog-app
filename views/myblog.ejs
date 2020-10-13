@@ -9,18 +9,18 @@
     <% } %>
 
     <div class="posts">
-        <% user.posts.forEach(post => { %>
+        <% for(let i = user.posts.length-1; i >= 0; i--) { %>
             <div class="card">
                 <div class="card-body col-sm-6">
-                    <h3><%= post.title %></h3>
-                    <p><%= post.body %></p>
-                    <p class="text-muted"><%= post.date %></p>
+                    <h3><%= user.posts[i].title %></h3>
+                    <p><%= user.posts[i].body %></p>
+                    <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
-                <form action="/deletepost/<%= post._id %>?_method=DELETE" method="POST">
-                    <button href="" class="btn btn-danger btn-md col-sm-2">Delete</button>
+                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
             </div>
-        <% }); %>
+        <% } %>
     </div>
 
 <%- include("./partials/footer") %>
