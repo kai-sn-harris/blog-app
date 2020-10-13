@@ -96,6 +96,18 @@ module.exports = (app) => {
         }
     });
 
+    app.get("/friendrequests", (req, res) => {
+        // Check if user is logged in
+        if(!(req.session && req.session.userId)) res.redirect("/");
+        // Find all user's in logged in user's friend requests
+        else {
+            // Find logged in user
+            User.findById(req.session.userId).populate("friendRequests").exec((err, user) => {
+                res.render("friendReqs", {reqs: user.friendRequests});
+            });
+        }
+    });
+
     app.post("/search", (req, res) => {
         let search = req.body.search;
         // find the username inside db
@@ -199,7 +211,7 @@ module.exports = (app) => {
 
     app.post("/friendreq/:username", (req, res) => {
         // check if the user is logged in
-        if(!(req.session && req.session.userId)) res.redirect("/");
+        if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
             // Find the user and add the logged in user's id to their friend requests
             User.findOne({username: req.params.username}, async (err, user) => {
@@ -209,6 +221,31 @@ module.exports = (app) => {
                 res.redirect("/blog");
             });
         }
+    });
+
+    app.post("/acceptreq/:acceptedUser", (req, res) => {
+        // Check if user is logged in (a few things might have caused them not to be)
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            // Add acceptedUser to loggedin user's friends
+            User.findById(req.session.userId)
+            .populate("friends")
+            .populate("friendRequests")
+            .exec(async (err, user) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/profile");
+                } else {
+                    // remove new friend from requests and add them to friends
+                    user.friends.push(user);
+                    // create new array from the old friend requests without the new friend
+                    let newReqs = user.friendRequests.filter(friendReq => {friendReq !== user});
+                    user.friendRequests = newReqs;
+                    await user.save();
+                    res.redirect("/profile");
+                }
+            });
+        }        
     });
 
     // DELETE requests
