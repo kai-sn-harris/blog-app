@@ -109,6 +109,20 @@ module.exports = (app) => {
         }
     });
 
+    app.get("/friends", (req, res) => {
+        // if the user is logged in they can't have friends
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            // find logged in user's friends
+            User.findById(req.session.userId).populate("friends").exec((err, user) => {
+                if(err) {
+                    console.log(err);
+                    res.redirect("/");
+                } else res.render("friends", {friends: user.friends});
+            });
+        }
+    });
+
     // POST REQUESTS
     app.post("/search", (req, res) => {
         let search = req.body.search;
@@ -125,14 +139,18 @@ module.exports = (app) => {
                     if(!(req.session && req.session.userId)) res.render("users", {search: search, user: user, loggedIn: false});
                     else {
                         loggedIn = false;
-                        // check if user is viewing themselves
+                        // check if logged in user is viewing themselves
                         User.findById(req.session.userId, (err, foundUser) => {
                             if(err) {
                                 console.log(err);
                                 res.redirect("/");
                             } else {
                                 if(user.username === foundUser.username) loggedIn = true;
-                                res.render("users", {search: search, user: user, loggedIn: loggedIn});
+                                // Check if the searched user has the logged in user in their friends list
+                                let inFriendList = false;
+                                if(user.friends.filter(friendID => friendID == foundUser._id.toString()).length > 0)
+                                    inFriendList = true;
+                                res.render("users", {search: search, user: user, loggedIn: loggedIn, inFriendList: inFriendList});
                             }
                         });
                     }
