@@ -211,12 +211,12 @@ module.exports = (app) => {
         }
     });
 
-    app.post("/updateprofile/:id", async (req, res) => {
+    app.post("/updateprofile", async (req, res) => {
         if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
             let user = req.body.user;
             user.private === "on" ? user.private = true : user.private = false;
-            await User.findByIdAndUpdate(req.params.id, user, (err) => {
+            await User.findOneAndUpdate({_id: req.session.userId}, user, (err) => {
                 if(err) {
                     if(err.code === 11000) {
                         req.flash("error", "Username already in use");

@@ -22,7 +22,7 @@
         </div>
     
         <div class="edit hidden col-sm-6">
-            <form action="/updateprofile/<%= user._id %>" method="POST">
+            <form action="/updateprofile" method="POST">
                 <% if(error.length !== 0) { %>
                     <div class="alert alert-danger">
                         <%= error %>
