@@ -18,11 +18,6 @@
             <li class="nav-item <%= active === "blog" ? "active" : "" %>">
                 <a class="nav-link" href="/blog">Blog</a>
             </li>
-            <% if(active === "blog" || active === "newpost") { %>
-                <li class="nav-item <%= active === "newpost" ? "active" : "" %>">
-                    <a href="/newpost" class="nav-link">New Post</a>
-                </li>
-            <% } %>
             <li class="nav-item <%= active === "profile" ? "active" : "" %>">
                 <a href="/profile" class="nav-link">My Profile</a>
             </li>

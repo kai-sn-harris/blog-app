@@ -1,6 +1,9 @@
 <%- include("./partials/header", {title: "Blog"}) %>
     <%- include("./partials/nav", {active: "blog"}) %>
-    <h1>Welcome <%= user.username %></h1>
+    <h1 id="myblog-h1">Welcome <%= user.username %></h1>
+    <header id="myblog-header">
+        <a href="/newpost" class="btn btn-lg btn-success">New Post</a>
+    </header>
 
     <% if(typeof error !== "undefined") { %>
         <div class="alert alert-danger" role="alert">

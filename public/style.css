@@ -17,18 +17,28 @@
     width: 100%;
 }
 
+#myblog-header {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 16px;
+}
+
+#myblog-h1 {
+   text-align: center;
+}
+
 .friendReq div header {
     display: flex;
 }
 
 .friendReq {
-    padding: 1rem 0.5rem;
+    padding: 16px 8px;
 }
 
 .round-pfp {
     border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
+    width: 48px;
+    height: 48px;
     display: inline-block;
 }
 
@@ -50,7 +60,7 @@
 }
 
 .edit-btn {
-    margin-right: 1rem;
+    margin-right: 16px;
 }
 
 .display, .edit {
