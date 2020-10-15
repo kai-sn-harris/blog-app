@@ -91,6 +91,7 @@ module.exports = (app) => {
                     user: user,
                     error: req.flash("error"),
                     tab: req.flash("tab"),
+                    friendError: req.flash("friendError"),
                     friendRequests: user.friendRequests
                 });
             });
@@ -234,10 +235,16 @@ module.exports = (app) => {
         else {
             // Find the user and add the logged in user's id to their friend requests
             User.findOne({username: req.params.username}, async (err, user) => {
-                let objectID = mongoose.Types.ObjectId(req.session.userId);
-                user.friendRequests.push(objectID);
-                await user.save();
-                res.redirect("/blog");
+                // check if logged in user is already in friend list or friend requests list
+                if(user.friends.filter(friendID => friendID == req.session.userId).length > 0) {
+                    req.flash("friendError", "Already friends with " + user.username);
+                    res.redirect("/profile");
+                } else {
+                    let objectID = mongoose.Types.ObjectId(req.session.userId);
+                    user.friendRequests.push(objectID);
+                    await user.save();
+                    res.redirect("/blog");
+                }
             });
         }
     });
