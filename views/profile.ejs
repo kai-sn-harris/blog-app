@@ -12,6 +12,11 @@
     </header>
 
     <div class="row-fluid">
+        <% if(friendError.length !== 0) { %>
+            <div class="alert alert-danger col-sm-4 mx-auto text-center" role="alert">
+                <%= friendError %>
+            </div>
+        <% } %>
         <div class="card display col-sm-4">
             <div class="card-body">
                 <img id="user-img" src="<%= user.imgSrc %>" alt="User image">
@@ -24,7 +29,7 @@
         <div class="edit hidden col-sm-6">
             <form action="/updateprofile" method="POST">
                 <% if(error.length !== 0) { %>
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger" role="alert">
                         <%= error %>
                     </div>
                 <% } %>
