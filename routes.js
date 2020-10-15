@@ -109,6 +109,7 @@ module.exports = (app) => {
         }
     });
 
+    // POST REQUESTS
     app.post("/search", (req, res) => {
         let search = req.body.search;
         // find the username inside db
@@ -140,7 +141,6 @@ module.exports = (app) => {
         });
     });
 
-    // POST REQUESTS
     app.post("/register", (req, res) => {
         let hash = bcrypt.hashSync(req.body.user.password, 14);
         req.body.user.password = hash;
