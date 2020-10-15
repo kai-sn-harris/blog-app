@@ -16,7 +16,7 @@
                 <% } else { %>
                     <p class="card-text"><%= user.username %> has no bio</p>
                 <% } %>
-                <% if(!user.private) { %>
+                <% if(!user.private || inFriendList) { %>
                     <a href="/blog/<%= user.username %>" class="btn btn-primary"><%= user.username %>'s blog</a>
                 <% } else { %>
                     <% if(loggedIn) { %>
@@ -26,11 +26,11 @@
                     <% } %>
                     
                 <% } %>
-                <% if(!loggedIn) { %>
+                <% if(!loggedIn && !inFriendList) { %>
                     <form method="POST" action="/friendreq/<%= user.username %>">
                         <button class="btn btn-primary mt-3">Send friend request</button>
                     </form>
-                    <% } %>
+                <% } %>
             </div>
         </div>
     <% } else { %>
