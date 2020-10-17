@@ -5,8 +5,9 @@
         <h1 class="display-3">Your Profile</h1>
         <div id="profile-btns">
             <% if(friendRequests.length !== 0) { %>
-                <a class="btn btn-success btn-lg" href="/friendrequests">Friend Requests</a>
+                <a class="btn btn-success btn-lg" href="/friendrequests">Friend Requests <span id="friendReqCount" class="badge badge-danger"><%= friendRequests.length %></span></a>
             <% } %>
+            <a href="/friends" class="btn btn-success btn-lg">Friends</a>
             <button class="btn btn-primary btn-lg edit-btn">Edit</button>
         </div>
     </header>
