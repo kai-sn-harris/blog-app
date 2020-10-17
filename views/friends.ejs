@@ -1,0 +1,14 @@
+<%- include("./partials/header", {title: "Friends"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <% friends.forEach(friend => { %>
+        <div class="friend card">
+            <img src="<%= friend.imgSrc %>" alt="user's pfp" class="card-img-top">
+            <div class="card-body">
+                <h1><%= friend.username %></h1>
+                <p><% if(friend.bio.length === 0) { %>Friend has no bio<% } else { %><%= friend.bio %><% } %></p>
+            </div>
+        </div>
+    <% }) %>
+
+<%- include("./partials/footer") %>
