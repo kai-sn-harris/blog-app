@@ -74,6 +74,12 @@
     align-items: center;
 }
 
+.friend {
+    width: 33.33%;
+    margin: 0 auto;
+    margin-top: 32px;
+}
+
 /* js toggles */
 .hidden {
     display: none;
