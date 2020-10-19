@@ -8,5 +8,6 @@ In this blog app, you have your very own blog. You can create posts, and share t
 
 ## Roadmap
  - ~~private setting on account~~ ✔
+ - private messages <b>Currently being worked on</b>
  - adding images to posts
  - ~~friends~~ ✔ (Will be refined later)
