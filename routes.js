@@ -124,6 +124,17 @@ module.exports = (app) => {
         }
     });
 
+    app.get("/dm", (req, res) => {
+        // Check if user is logged in
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            // find logged in user
+            User.findById(req.session.userId, (err, user) => {
+                res.render("dm", {username: user.username});
+            });
+        }
+    });
+
     // POST REQUESTS
     app.post("/search", (req, res) => {
         let search = req.body.search;
