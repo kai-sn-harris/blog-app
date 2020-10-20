@@ -1,0 +1,18 @@
+<%- include("./partials/header", {title: "Direct Message"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <h1>chat</h1>
+
+    <ul id="chatlog"></ul>
+
+    <form class="dm-form">
+        <div class="form-group">
+            <input class="form-control" type="text">
+            <button>submit</button>
+        </div>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>let username = "<%= username %>";</script>
+    <script src="/dm.js"></script>
+<%- include("./partials/footer") %>
