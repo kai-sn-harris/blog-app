@@ -1,3 +1,8 @@
+:root {
+    --chat-primary-colour: white;
+    --chat-secondary-colour: rgb(190,190,190);
+}
+
 #profile-header {
     display: flex;
     justify-content: space-between;
@@ -25,6 +30,20 @@
 
 #myblog-h1 {
    text-align: center;
+}
+
+#chatlog {
+    width: 100vw;
+    padding: 0;
+} #chatlog li {
+    list-style: none;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: var(--chat-primary-colour);
+} #chatlog li:nth-of-type(2n) {
+    background-color: var(--chat-secondary-colour);
+} #chatlog li:last-of-type {
+    margin-bottom: 5rem;
 }
 
 .friendReq div header {
