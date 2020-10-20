@@ -1,5 +1,7 @@
 const express  = require("express"),
 app            = express(),
+http           = require("http").createServer(app),
+io             = require("socket.io")(http),
 mongoose       = require("mongoose"),
 sessions       = require("client-sessions"),
 methodOverride = require("method-override"),
@@ -26,7 +28,10 @@ mongoose.connect(process.env.MONGODB_URI, {
     useCreateIndex: true
 });
 
+// sockets
+require("./sockets")(io);
+
 // routes
 require("./routes")(app);
 
-app.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));
+http.listen(PORT, console.log(`Serving port ${PORT} at http://localhost:${PORT}`));
