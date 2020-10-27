@@ -1,7 +1,6 @@
 const express  = require("express"),
 app            = express(),
 http           = require("http").createServer(app),
-io             = require("socket.io")(http),
 mongoose       = require("mongoose"),
 sessions       = require("client-sessions"),
 methodOverride = require("method-override"),
