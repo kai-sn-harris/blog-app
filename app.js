@@ -28,9 +28,6 @@ mongoose.connect(process.env.MONGODB_URI, {
     useCreateIndex: true
 });
 
-// sockets
-require("./sockets")(io);
-
 // routes
 require("./routes")(app);
 
