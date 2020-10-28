@@ -190,7 +190,7 @@ module.exports = (app) => {
     app.post("/login", (req, res) => {
         User.findOne({email: req.body.user.email}, async (err, user) => {
             // if an error occured, or if the user is not found (falsey), or if the password does not match
-            await !bcrypt.compare(req.body.user.password, user.password).then(loginSuccess => {
+            bcrypt.compare(req.body.user.password, user.password).then(loginSuccess => {
                 if(err || !user || !loginSuccess) {
                     res.render("login", {error: "Incorrect username or password"});
                 } else {
