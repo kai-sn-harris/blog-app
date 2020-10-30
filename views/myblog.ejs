@@ -19,7 +19,7 @@
                     <p><%= user.posts[i].body %></p>
                     <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
-                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" id="del-form">
+                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="del-form">
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
             </div>
