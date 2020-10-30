@@ -19,11 +19,22 @@
                     <p><%= user.posts[i].body %></p>
                     <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
-                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST">
+                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" id="del-form">
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
             </div>
         <% } %>
     </div>
 
+    <div id="modal" style="display: none;">
+        <div class="col-sm-6 col-md-3 col-lg-4">
+            <h1>Are you sure?</h1>
+            <div>
+                <a id="yes-btn" class="btn btn-lg btn-success">Yes!</a>
+                <a id="no-btn" class="btn btn-lg btn-danger">No</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/blog.js"></script>
 <%- include("./partials/footer") %>
