@@ -14,7 +14,7 @@ forms.forEach(form => {
         toSubmit = form;
         event.preventDefault();
         // remove scroll bar from body (also prevents scrolling)
-        document.querySelector("body").style.overflow = "hidden";
+        document.querySelector("body").style.overflowY = "hidden";
         openModal();
     });
 });
@@ -26,6 +26,6 @@ yesBtn.addEventListener("click", () => {
 noBtn.addEventListener("click", () => {
     modal.style.display = "none";
     // Add scroll back
-    document.querySelector("body").style.overflow = "scroll";
+    document.querySelector("body").style.overflowY = "scroll";
     toSubmit = null;
 });
