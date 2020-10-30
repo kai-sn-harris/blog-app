@@ -1,4 +1,4 @@
-const form = document.querySelector("#del-form"),
+const forms = document.querySelectorAll(".del-form"),
 yesBtn = document.querySelector("#yes-btn"),
 noBtn = document.querySelector("#no-btn");
 
@@ -22,17 +22,23 @@ function openModal() {
     modal.style.display === "none" ? modal.style.display = "flex" : modal.style.display = "none";
 }
 
-form.addEventListener("submit", event => {
-    event.preventDefault();
-    disableScroll();
-    openModal();
+let toSubmit;
+
+forms.forEach(form => {
+    form.addEventListener("submit", event => {
+        toSubmit = form;
+        event.preventDefault();
+        disableScroll();
+        openModal();
+    });
 });
 
 yesBtn.addEventListener("click", () => {
-    form.submit();
+    toSubmit.submit();
 });
 
 noBtn.addEventListener("click", () => {
     enableScroll();
     modal.style.display = "none";
+    toSubmit = null;
 });
