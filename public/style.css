@@ -118,6 +118,13 @@
     margin-top: 32px;
 }
 
+.posts {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
 /* js toggles */
 .hidden {
     display: none;
