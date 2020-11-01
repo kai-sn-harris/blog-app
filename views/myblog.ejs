@@ -16,7 +16,14 @@
             <div class="card col-sm-6 mb-3">
                 <div class="card-body">
                     <h3><%= user.posts[i].title %></h3>
-                    <p><%= user.posts[i].body %></p>
+                    <% if(user.posts[i].body.length <= 250) { %><p><%= user.posts[i].body %></p><% } else { %>
+                        <% let shortBody = ""; %>
+                        <% for(let j = 0; j <= 250; j++) { %>
+                            <% shortBody += user.posts[i].body[j] %>
+                        <% } %>
+                        <% shortBody += "..."; %>
+                        <p><%= shortBody %></p>
+                    <% } %>
                     <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
                 <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="mb-3 del-form">
