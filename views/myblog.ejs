@@ -15,7 +15,7 @@
         <% for(let i = user.posts.length-1; i >= 0; i--) { %>
             <div class="card col-sm-6 mb-3">
                 <div class="card-body">
-                    <h3><%= user.posts[i].title %></h3>
+                    <a href="/post/<%= user.posts[i]._id %>"><h3><%= user.posts[i].title %></h3></a>
                     <% if(user.posts[i].body.length <= 250) { %><p><%= user.posts[i].body %></p><% } else { %>
                         <% let shortBody = ""; %>
                         <% for(let j = 0; j <= 250; j++) { %>
