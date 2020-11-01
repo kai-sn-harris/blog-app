@@ -1,0 +1,12 @@
+<%- include("./partials/header", {title: "Post"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <div class="posts">
+        <div class="col-sm-9">
+            <h1><%= post.title %></h1>
+            <p><%= post.body %></p>
+        </div>
+        <button onClick="history.go(-1)" class="btn btn-success btn-lg mb-3">Back</button>
+    </div>
+
+<%- include("./partials/footer") %>
