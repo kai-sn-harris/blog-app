@@ -1,7 +1,7 @@
 <% let username = user.username; %>
 <%- include("./partials/header", {title: username + "'s blog"}) %>
     <%- include("./partials/nav", {active: ""}) %>
-    <h1><%= user.username %>'s Blog</h1>
+    <h1 style="text-align: center;"><%= user.username %>'s Blog</h1>
 
     <% if(typeof error !== "undefined") { %>
         <div class="alert alert-danger" role="alert">
@@ -11,7 +11,7 @@
 
     <div class="posts">
         <% for(let i = user.posts.length-1; i >= 0; i--) { %> 
-            <div class="card">
+            <div class="card col-sm-6">
                 <div class="card-body">
                     <h3><%= user.posts[i].title %></h3>
                     <p><%= user.posts[i].body %></p>

@@ -13,13 +13,13 @@
 
     <div class="posts">
         <% for(let i = user.posts.length-1; i >= 0; i--) { %>
-            <div class="card">
-                <div class="card-body col-sm-6">
+            <div class="card col-sm-6 mb-3">
+                <div class="card-body">
                     <h3><%= user.posts[i].title %></h3>
                     <p><%= user.posts[i].body %></p>
                     <p class="text-muted"><%= user.posts[i].date %></p>
                 </div>
-                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="del-form">
+                <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="mb-3 del-form">
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
             </div>
