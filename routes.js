@@ -135,6 +135,17 @@ module.exports = (app) => {
         }
     });
 
+    app.get("/post/:id", (req, res) => {
+        Post.findById(req.params.id, (err, post) => {
+            if(err) {
+                console.log(err);
+                res.redirect("/");
+            } else {
+                res.render("post", {post: post});
+            }
+        });
+    });
+
     // POST REQUESTS
     app.post("/search", (req, res) => {
         let search = req.body.search;
