@@ -357,7 +357,7 @@ module.exports = (app) => {
                     });
                     if(usersPost) {
                         // find post
-                        await Post.findByIdAndUpdate(req.params.id, { body: req.body.body, title: req.body.title });
+                        await Post.findByIdAndUpdate(req.params.id, { body: req.body.body, title: req.body.title, editDate: Date.now() });
                         res.redirect("/blog");
                     } else {
                         req.flash("error", "You cannot edit someone else's post");
