@@ -25,6 +25,9 @@
                         <p><%= shortBody %></p>
                     <% } %>
                     <p class="text-muted"><%= user.posts[i].date %></p>
+                    <% if(typeof user.posts[i].editDate !== "undefined" && user.posts[i].editDate.length !== 0) { %>
+                        <p class="text-muted">Edited on: <%= user.posts[i].editDate %></p>    
+                    <% } %>
                 </div>
                 <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="mb-3 del-form">
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
