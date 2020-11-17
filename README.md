@@ -10,4 +10,5 @@ In this blog app, you have your very own blog. You can create posts, and share t
  - ~~private setting on account~~ ✔
  - private messages <b>Currently being worked on</b>
  - adding images to posts
+ - ~~Editing posts~~ ✔
  - ~~friends~~ ✔ (Will be refined later)
