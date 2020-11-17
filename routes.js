@@ -338,6 +338,36 @@ module.exports = (app) => {
         }        
     });
 
+    
+    app.post("/editpost/:id", (req, res) => {
+        // Check if the post id belongs to the logged in user
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            User.findById(req.session.userId, async (err, user) => {
+                if(err) res.redirect("/");
+                else if(!user) res.redirect("/login");
+                else {
+                    let usersPost = false;
+                    // Check if the post id is in the logged in user's posts (unpopulated because only need id)
+                    user.posts.forEach(id => {
+                        if(id == req.params.id) {
+                            // the post is the user's
+                            usersPost = true;
+                        }
+                    });
+                    if(usersPost) {
+                        // find post
+                        await Post.findByIdAndUpdate(req.params.id, { body: req.body.body, title: req.body.title });
+                        res.redirect("/blog");
+                    } else {
+                        req.flash("error", "You cannot edit someone else's post");
+                        res.redirect("/blog");
+                    }
+                }
+            });
+        }
+    });
+
     // DELETE requests
     app.delete("/deletepost/:id", (req, res) => {
         // find post
