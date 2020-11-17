@@ -5,7 +5,7 @@
         <a href="/newpost" class="btn btn-lg btn-success">New Post</a>
     </header>
 
-    <% if(typeof error !== "undefined") { %>
+    <% if(error.length !== 0) { %>
         <div class="alert alert-danger" role="alert">
             <%= error %>
         </div>
@@ -29,6 +29,7 @@
                 <form action="/deletepost/<%= user.posts[i]._id %>?_method=DELETE" method="POST" class="mb-3 del-form">
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
+                <a href="/editpost/<%= user.posts[i]._id %>" class="btn btn-md btn-primary col-sm-2 mb-3">Edit Post</a>
             </div>
         <% } %>
     </div>
