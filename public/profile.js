@@ -14,7 +14,7 @@ const changeTab = () => {
         document.querySelector("textarea#bio").value = bio;
         document.querySelector("input#private").checked = private;
     }
-    !displayMode ? editBtn.textContent = "Back" : editBtn.textContent = "Edit";
+    displayMode ? editBtn.textContent = "Edit" : editBtn.textContent = "Back";
 }
 
 editBtn.addEventListener("click", changeTab);
