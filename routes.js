@@ -32,8 +32,9 @@ module.exports = (app) => {
                 // not sure what the next() function does but it works so yea
                 if(err) next(err);
                 if(!user) res.redirect("/login");
-                
-                else res.render("myblog", {user: user});
+                else {
+                    res.render("myblog", {user: user, error: req.flash("error")});
+                }
             });
         }
     });
@@ -146,6 +147,37 @@ module.exports = (app) => {
         });
     });
 
+    app.get("/editpost/:id", (req, res) => {
+        // Check if the post id belongs to the logged in user
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            User.findById(req.session.userId, (err, user) => {
+                if(err) res.redirect("/");
+                else if(!user) res.redirect("/login");
+                else {
+                    let usersPost = false;
+                    // Check if the post id is in the logged in user's posts (unpopulated because only need id)
+                    user.posts.forEach(id => {
+                        if(id == req.params.id) {
+                            // the post is the user's
+                            usersPost = true;
+                        }
+                    });
+                    if(usersPost) {
+                        // find post
+                        Post.findById(req.params.id, (err, post) => {
+                            if(err) res.redirect("/");
+                            else res.render("edit", {post: post});
+                        });
+                    } else {
+                        req.flash("error", "You cannot edit someone else's post");
+                        res.redirect("/blog");
+                    }
+                }
+            });
+        }
+    });
+
     // POST REQUESTS
     app.post("/search", (req, res) => {
         let search = req.body.search;
@@ -215,7 +247,7 @@ module.exports = (app) => {
 
     app.post("/newpost", async (req, res) => {
         // check if there is a web session
-        if(!(req.session && req.session.userId)) res.redirect("/blog", {error: "Could create a new post at this time"});
+        if(!(req.session && req.session.userId)) res.redirect("/blog", {error: "Could not create a new post at this time"});
         else {
             let post = new Post(req.body.post);
             await post.save(err => {
