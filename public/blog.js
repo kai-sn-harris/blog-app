@@ -5,6 +5,7 @@ noBtn = document.querySelector("#no-btn");
 function openModal() {
     let modal = document.querySelector("#modal");
     modal.style.display === "none" ? modal.style.display = "flex" : modal.style.display = "none";
+    modal.style.marginTop = `${window.scrollY}px`;
 }
 
 let toSubmit;
