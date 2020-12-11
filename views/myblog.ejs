@@ -33,6 +33,17 @@
                     <button class="btn btn-danger btn-md col-sm-2">Delete</button>
                 </form>
                 <a href="/editpost/<%= user.posts[i]._id %>" class="btn btn-md btn-primary col-sm-2 mb-3">Edit Post</a>
+                <button class="btn btn-md btn-info col-sm-2 mb-3" id="show-comments">Show comments</button>
+                <div id="comments" class="hidden">
+                    <% for(let j = user.posts[i].comments.length-1; j >= 0; j--) { %>
+                        <div class="card mb-3">
+                            <div class="card-body comment-card-body">
+                                <span class="text-muted"><strong style="color: rgb(51, 51, 51)"><%= user.posts[i].comments[j].author.username %></strong> says:</span>
+                                <span style="display: block;"><%= user.posts[i].comments[j].body %></span>
+                            </div>
+                        </div>
+                    <% } %>
+                </div>
             </div>
         <% } %>
     </div>
@@ -48,4 +59,5 @@
     </div>
 
     <script src="/blog.js"></script>
+    <script src="/blogComments.js"></script>
 <%- include("./partials/footer") %>
