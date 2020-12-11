@@ -12,3 +12,4 @@ In this blog app, you have your very own blog. You can create posts, and share t
  - adding images to posts
  - ~~Editing posts~~ ✔
  - ~~friends~~ ✔ (Will be refined later)
+ - ~~Can add comments to posts~~ ✔
