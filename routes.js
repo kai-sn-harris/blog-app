@@ -29,7 +29,15 @@ module.exports = (app) => {
         if(!(req.session && req.session.userId)) res.redirect("/login");
         else {
             // find user
-            User.findById(req.session.userId).populate("posts").exec((err, user) => {
+            User.findById(req.session.userId).populate({
+                path: "posts",
+                populate: {
+                 path: "comments",
+                 populate: {
+                   path: "author"
+                 }
+                }
+            }).exec((err, user) => {
                 // not sure what the next() function does but it works so yea
                 if(err) next(err);
                 if(!user) res.redirect("/login");
@@ -215,7 +223,7 @@ module.exports = (app) => {
                 if(!user) res.render("users", {search: search, loggedIn: false});
                 else {
                     // check if user is logged in AND matches the searched user
-                    if(!(req.session && req.session.userId)) res.render("users", {search: search, user: user, loggedIn: false});
+                    if(!(req.session && req.session.userId)) res.render("users", {search: search, user: user, loggedIn: false, inFriendList: true});
                     else {
                         loggedIn = false;
                         // check if logged in user is viewing themselves
