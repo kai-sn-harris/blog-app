@@ -1,11 +1,12 @@
-let showCommentsBtn = document.querySelector("#show-comments"),
-commentsDiv = document.querySelector("#comments");
+let showCommentsBtns = document.querySelectorAll("#show-comments");
 
 let shown = false;
 
-showCommentsBtn.addEventListener("click", () => {
-    commentsDiv.classList.toggle("hidden");
-    shown = !shown;
-    if(shown) showCommentsBtn.textContent = "Hide Comments";
-    else showCommentsBtn.textContent = "Show comments";
+showCommentsBtns.forEach(btn => {
+    btn.addEventListener("click", event => {
+        btn.parentElement.querySelector("#comments").classList.toggle("hidden");
+        shown = !shown;
+        if(shown) btn.textContent = "Hide Comments";
+        else btn.textContent = "Show comments";
+    });
 });
