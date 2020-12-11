@@ -125,6 +125,10 @@
     flex-direction: column;
 }
 
+.comment-card-body {
+    padding: 16px 32px !important;
+}
+
 /* js toggles */
 .hidden {
     display: none;
