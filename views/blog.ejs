@@ -26,9 +26,22 @@
                     <% if(typeof user.posts[i].editDate !== "undefined" && user.posts[i].editDate.length !== 0) { %>
                         <p class="text-muted">Edited on: <%= user.posts[i].editDate %></p>    
                     <% } %>
+                    <a class="btn btn-md btn-primary" href="/addcomment/<%= user.posts[i]._id %>">Add a comment!</a>
+                    <button class="btn btn-sm btn-info mt-1 d-block" id="show-comments">Show comments</button>
+                    <div id="comments" class="hidden">
+                        <% user.posts[i].comments.forEach(comment => { %>
+                            <div class="card mt-3">
+                                <div class="card-body comment-card-body">
+                                    <span class="text-muted"><strong style="color: rgb(51, 51, 51)"><%= comment.author.username %></strong> says:</span>
+                                    <span style="display: block;"><%= comment.body %></span>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
                 </div>
             </div>
         <% } %>
     </div>
 
+    <script src="/otherUserBlog.js"></script>
 <%- include("./partials/footer") %>
