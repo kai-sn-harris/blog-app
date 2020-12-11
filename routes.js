@@ -41,7 +41,7 @@ module.exports = (app) => {
     });
 
     // view another user's blog
-    app.get("/blog/:username", async (req, res) => {
+    app.get("/blog/:username", (req, res) => {
         let username = req.params.username;
 
         const viewBlog = () => {
@@ -53,7 +53,7 @@ module.exports = (app) => {
                    path: "author"
                  }
                 }
-            }).exec(async (err, user) => {
+            }).exec((err, user) => {
                 if(err) {
                     console.log(err);
                     res.redirect("/");
