@@ -1,0 +1,14 @@
+<%- include("./partials/header", {title: "Comment"}) %>
+    <%- include("./partials/nav", {active: ""}) %>
+
+    <div class="container">
+        <h1>Add a commment to "<%= post.title %>"</h1>
+        <form action="/addcomment/<%= post._id %>" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="body">
+            </div>
+            <button class="btn btn-lg btn-success">Submit</button>
+        </form>
+    </div>
+
+<%- include("./partials/footer") %>
