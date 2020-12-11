@@ -1,5 +1,6 @@
 const User = require("./models/User"),
 Post = require("./models/Post"),
+Comment = require("./models/Comment"),
 bcrypt = require("bcryptjs"),
 mongoose = require("mongoose");
 
@@ -44,11 +45,21 @@ module.exports = (app) => {
         let username = req.params.username;
 
         const viewBlog = () => {
-            User.findOne({username: username}).populate("posts").exec((err, user) => {
+            User.findOne({username: username}).populate({
+                path: "posts",
+                populate: {
+                 path: "comments",
+                 populate: {
+                   path: "author"
+                 }
+                }
+            }).exec(async (err, user) => {
                 if(err) {
                     console.log(err);
                     res.redirect("/");
-                } else res.render("blog", {user: user});
+                } else {
+                    res.render("blog", {user: user});
+                }
             });
         }
 
@@ -174,6 +185,19 @@ module.exports = (app) => {
                         res.redirect("/blog");
                     }
                 }
+            });
+        }
+    });
+
+    app.get("/addcomment/:postID", (req, res) => {
+        // Check if user is loggedin
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            // Find the post
+            Post.findById(req.params.postID, (err, post) => {
+                let error = false;
+                if(err || !post) error = true;
+                res.render("comment", {error: error, post: post});
             });
         }
     });
@@ -366,6 +390,32 @@ module.exports = (app) => {
                 }
             });
         }
+    });
+
+    app.post("/addcomment/:postID", (req, res) => {
+        // Check if user is logged in
+        if(!(req.session && req.session.userId)) res.redirect("/login");
+        else {
+            // find the post
+            Post.findById(req.params.postID).populate("comments").exec((err, post) => {
+                if(err || !post) res.redirect("/");
+                else {
+                    // Find author
+                    User.findById(req.session.userId, async (err, user) => {
+                        if(err || !user) res.redirect("/");
+                        else {
+                            // Create a new comment
+                            let newComment = await Comment.create({author: user._id, body: req.body.body});
+                            // add comment to post and save
+                            post.comments.push(newComment);
+                            post.save();
+                            // console.log(post.comments)
+                            res.redirect("/blog");
+                        }
+                    });
+                }
+            });
+        } 
     });
 
     // DELETE requests
